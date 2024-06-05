@@ -19,9 +19,10 @@ var max_health = 3
 signal change_life(player_health)
 
 func _ready() -> void:
+	Global.set("player", self)
 	connect("change_life", get_parent().get_node("HUD/HBoxContainer/Holder"), "on_change_life")
 	emit_signal("change_life", max_health)
-	position.x = Global.checkpoint_pos + 50
+#	position.x = Global.checkpoint_pos + 50
 	
 
 
@@ -86,8 +87,7 @@ func _on_hurtbox_body_entered(body):
 	knockback()
 	get_node("hurtbox/collision").set_deferred("disabled", true)
 	yield(get_tree().create_timer(0.2), "timeout")
-	get_node("hurtbox/collision").set_deferred("disabled", false)
-	
+	get_node("hurtbox/collision").set_deferred("disabled", false)	
 	hurted = false
 	if player_health < 1:
 		queue_free()
@@ -95,3 +95,21 @@ func _on_hurtbox_body_entered(body):
 		
 func hit_checkpoint():
 	Global.checkpoint_pos = position.x
+
+
+func _on_hurtbox_area_entered(area):
+	player_health -= 1
+	hurted = true
+	emit_signal("change_life", player_health)
+	knockback()
+	get_node("hurtbox/collision").set_deferred("disabled", true)
+	yield(get_tree().create_timer(0.2), "timeout")
+	get_node("hurtbox/collision").set_deferred("disabled", false)	
+	hurted = false
+	if player_health < 1:
+		queue_free()
+		get_tree().reload_current_scene()
+
+
+func _on_Trigger_PlayerEntered():
+	$camera.current = false
