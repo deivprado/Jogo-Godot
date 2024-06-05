@@ -14,6 +14,10 @@ config/name="Projeto Godot"
 run/main_scene="res://Levels/Level_01.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Global="*res://Scripts/Global.gd"
+
 [display]
 
 window/size/width=320
@@ -75,6 +79,9 @@ jump={
 2d_physics/layer_2="Enemies"
 2d_physics/layer_3="Itens"
 2d_physics/layer_4="World"
+2d_physics/layer_5="Traps"
+2d_physics/layer_6="Hurtboxes"
+2d_physics/layer_7="Hitboxes"
 
 [physics]
 

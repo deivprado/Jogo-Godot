@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/CheckPoints/Start/Start (Idle).png" type="Texture" id=1]
+[ext_resource path="res://Scripts/checkpoint.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 63.5 )
+
+[node name="checkpoint" type="Area2D"]
+collision_layer = 16
+script = ExtResource( 2 )
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -63.5 )
+shape = SubResource( 1 )
+
+[node name="Start(Idle)" type="Sprite" parent="."]
+position = Vector2( 0, -32 )
+texture = ExtResource( 1 )
+
+[connection signal="body_entered" from="." to="." method="_on_checkpoint_body_entered"]
